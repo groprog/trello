@@ -1,25 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useCallback } from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import Navbar from "./components/Navbar";
 function App() {
+  const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const handleMobileDrawerOpen = useCallback(() => {
+    setIsMobileDrawerOpen(true);
+  }, [setIsMobileDrawerOpen]);
+  const [selectedTab, setSelectedTab] = useState(null);
+  const selectHome = useCallback(() => {
+    document.title =
+      "WaVer - Free template for building an SaaS or admin application";
+    setSelectedTab("Home");
+  }, [setSelectedTab]);
+
+  const selectBlog = useCallback(() => {
+    document.title = "WaVer - Blog";
+    setSelectedTab("Blog");
+  }, [setSelectedTab]);
+  const handleMobileDrawerClose = useCallback(() => {
+    setIsMobileDrawerOpen(false);
+  }, [setIsMobileDrawerOpen]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route>
+          <Navbar
+            selectedTab={selectedTab}
+            mobileDrawerOpen={isMobileDrawerOpen}
+            handleMobileDrawerOpen={handleMobileDrawerOpen}
+            handleMobileDrawerClose={handleMobileDrawerClose}
+          />
+        </Route>
+      </Switch>
+    </BrowserRouter>
   );
 }
 
