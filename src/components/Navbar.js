@@ -1,145 +1,42 @@
-import React, { memo } from "react";
-import { Link } from "react-router-dom";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Hidden,
-  IconButton,
-  withStyles,
-} from "@material-ui/core";
+import React from "react";
+// material import
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import HomeIcon from "@material-ui/icons/Home";
-import HowToRegIcon from "@material-ui/icons/HowToReg";
-import LockOpenIcon from "@material-ui/icons/LockOpen";
-import BookIcon from "@material-ui/icons/Book";
-import Navigation from "./Navigation";
-const styles = (theme) => ({
-  appBar: {
-    boxShadow: theme.shadows[6],
-    backgroundColor: theme.palette.common.white,
+// react router import
+import { Link, BrowserRouter as Router } from "react-router-dom";
+// make style
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
   },
-  toolbar: {
-    display: "flex",
-    justifyContent: "space-between",
+  menuButton: {
+    marginRight: theme.spacing(2),
   },
-  menuButtonText: {
-    fontSize: theme.typography.body1.fontSize,
-    fontWeight: theme.typography.h6.fontWeight,
+  title: {
+    flexGrow: 1,
   },
-  brandText: {
-    fontFamily: "'Baloo Bhaijaan', cursive",
-    fontWeight: 400,
-  },
-  noDecoration: {
-    textDecoration: "none !important",
-  },
-});
-const menuItems = [
-  {
-    link: "/",
-    name: "Home",
-    icon: <HomeIcon className="text-white" />,
-  },
-  {
-    link: "/blog",
-    name: "Blog",
-    icon: <BookIcon className="text-white" />,
-  },
-  {
-    name: "Register",
-    icon: <HowToRegIcon className="text-white" />,
-  },
-  {
-    name: "Login",
-    icon: <LockOpenIcon className="text-white" />,
-  },
-];
-function Navbar(props) {
-  const {
-    classes,
-    handleMobileDrawerOpen,
-    handleMobileDrawerClose,
-    mobileDrawerOpen,
-    selectedTab,
-  } = props;
+}));
+
+function Navbar() {
+  const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-          <div>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="primary"
-            >
-              Tre
-            </Typography>
-            <Typography
-              variant="h4"
-              className={classes.brandText}
-              display="inline"
-              color="secondary"
-            >
-              llo
-            </Typography>
-          </div>
-          <div>
-            <Hidden mdUp>
-              <IconButton
-                className={classes.menuButton}
-                aria-label="Open Navigation"
-                onClick={handleMobileDrawerOpen}
-              >
-                <MenuIcon color="primary" />
-              </IconButton>
-            </Hidden>
-            <Hidden smDown>
-              {menuItems.map((element) => {
-                if (element.link) {
-                  return (
-                    <Link
-                      key={element.name}
-                      to={element.link}
-                      className={classes.noDecoration}
-                      onClick={handleMobileDrawerClose}
-                    >
-                      <Button
-                        color="secondary"
-                        size="large"
-                        classes={{ text: classes.menuButtonText }}
-                      >
-                        {element.name}
-                      </Button>
-                    </Link>
-                  );
-                }
-                return (
-                  <Button
-                    color="secondary"
-                    size="large"
-                    onClick={element.onClick}
-                    classes={{ text: classes.menuButtonText }}
-                    key={element.name}
-                  >
-                    {element.name}
-                  </Button>
-                );
-              })}
-            </Hidden>
-          </div>
+      <AppBar position="static" color="secondary">
+        <Toolbar>
+          <Typography variant="h6" className={classes.title}>
+            Trello
+          </Typography>
+          <Button color="inherit">Login</Button>
+          <Button color="inherit">Register</Button>
         </Toolbar>
       </AppBar>
-      <Navigation
-        menuItems={menuItems}
-        anchor="right"
-        open={mobileDrawerOpen}
-        selectedItem={selectedTab}
-        onClose={handleMobileDrawerClose}
-      />
     </div>
   );
 }
-export default withStyles(styles, { withTheme: true })(memo(Navbar));
+
+export default Navbar;
