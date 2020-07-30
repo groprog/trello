@@ -1,1 +1,9 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
+
+* {
+  margin: 0;
+}
+.site-card-wrapper {
+  padding: 30px;
+  background: #ececec;
+}
